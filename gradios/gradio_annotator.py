@@ -1,4 +1,9 @@
 import gradio as gr
+import sys
+import os
+
+# 添加父目录到Python路径
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from annotator.util import resize_image, HWC3
 
