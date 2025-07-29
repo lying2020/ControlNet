@@ -9,9 +9,9 @@ from cldm.model import create_model, load_state_dict
 
 # Configs
 resume_path = './models/control_sd21_ini.ckpt'
-batch_size = 4
+batch_size = 8  # 从4增加到8，利用RTX 4090的48GB显存
 logger_freq = 300
-learning_rate = 1e-5
+learning_rate = 8e-6
 sd_locked = True
 only_mid_control = False
 
@@ -28,7 +28,7 @@ model.only_mid_control = only_mid_control
 dataset = MyDataset()
 dataloader = DataLoader(dataset, num_workers=0, batch_size=batch_size, shuffle=True)
 logger = ImageLogger(batch_frequency=logger_freq)
-trainer = pl.Trainer(gpus=1, precision=32, callbacks=[logger])
+trainer = pl.Trainer(gpus=1, precision=16, callbacks=[logger], max_epochs=10)  # 设置20轮训练
 
 
 # Train!

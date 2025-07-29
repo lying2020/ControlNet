@@ -1,10 +1,14 @@
 import sys
 import os
 
-assert len(sys.argv) == 3, 'Args are wrong.'
 
-input_path = sys.argv[1]
-output_path = sys.argv[2]
+# sd2.1 模型路径
+input_path = "./models/stable-diffusion/v2-1_512-ema-pruned.ckpt"
+output_path = "./models/control_sd21_ini.ckpt"
+
+if len(sys.argv) == 3:
+    input_path = sys.argv[1]
+    output_path = sys.argv[2]
 
 assert os.path.exists(input_path), 'Input model does not exist.'
 assert not os.path.exists(output_path), 'Output filename already exists.'

@@ -1,18 +1,21 @@
 import sys
 import os
+import torch
+from share import *
+from cldm.model import create_model
 
-assert len(sys.argv) == 3, 'Args are wrong.'
 
-input_path = sys.argv[1]
-output_path = sys.argv[2]
+# # sd1.5 模型路径
+input_path = "./models/stable-diffusion/v1-5-pruned.ckpt"
+output_path = "./models/control_sd15_ini.ckpt"
+
+if len(sys.argv) == 3:
+    input_path = sys.argv[1]
+    output_path = sys.argv[2]
 
 assert os.path.exists(input_path), 'Input model does not exist.'
 assert not os.path.exists(output_path), 'Output filename already exists.'
 assert os.path.exists(os.path.dirname(output_path)), 'Output path is not valid.'
-
-import torch
-from share import *
-from cldm.model import create_model
 
 
 def get_node_name(name, parent_name):
