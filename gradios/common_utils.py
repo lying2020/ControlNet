@@ -12,6 +12,10 @@ import numpy as np
 import torch
 import random
 
+# 添加父目录到Python路径
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 from pytorch_lightning import seed_everything
 from annotator.util import resize_image, HWC3
 from cldm.model import create_model, load_state_dict
@@ -41,7 +45,7 @@ class ControlNetProcessor:
     def _load_model(self, model_yaml, model_path):
         """加载模型"""
         self.model = create_model(model_yaml).cpu()
-        self.model.load_state_dict(load_state_dict(model_path, location='cuda'))
+        self.model.load_state_dict(load_state_dict(model_path, location='cuda'), strict=False)
         self.model = self.model.cuda()
         self.ddim_sampler = DDIMSampler(self.model)
 

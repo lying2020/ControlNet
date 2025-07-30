@@ -13,42 +13,42 @@ from common_utils import (
 # 处理器配置
 PROCESSORS = {
     'canny': {
-        'processor': CannyProcessor('./models/control_sd15_canny.pth'),
+        'processor': CannyProcessor('./models/controlnet/control_sd15_canny.pth'),
         'title': 'Control Stable Diffusion with Canny Edge Maps',
         'params': DETECTOR_PARAMS['canny']
     },
     'depth': {
-        'processor': DepthProcessor('./models/control_sd15_depth.pth'),
+        'processor': DepthProcessor('./models/controlnet/control_sd15_depth.pth'),
         'title': 'Control Stable Diffusion with Depth Maps',
         'params': DETECTOR_PARAMS['depth']
     },
     'pose': {
-        'processor': PoseProcessor('./models/control_sd15_openpose.pth'),
+        'processor': PoseProcessor('./models/controlnet/control_sd15_openpose.pth'),
         'title': 'Control Stable Diffusion with Human Pose',
         'params': DETECTOR_PARAMS['pose']
     },
     'hed': {
-        'processor': HEDProcessor('./models/control_sd15_hed.pth'),
+        'processor': HEDProcessor('./models/controlnet/control_sd15_hed.pth'),
         'title': 'Control Stable Diffusion with HED Edge Maps',
         'params': DETECTOR_PARAMS['hed']
     },
     'mlsd': {
-        'processor': MLSDProcessor('./models/control_sd15_mlsd.pth'),
+        'processor': MLSDProcessor('./models/controlnet/control_sd15_mlsd.pth'),
         'title': 'Control Stable Diffusion with MLSD Line Detection',
         'params': DETECTOR_PARAMS['mlsd']
     },
     'normal': {
-        'processor': NormalProcessor('./models/control_sd15_normal.pth'),
+        'processor': NormalProcessor('./models/controlnet/control_sd15_normal.pth'),
         'title': 'Control Stable Diffusion with Normal Maps',
         'params': DETECTOR_PARAMS['normal']
     },
     'scribble': {
-        'processor': ScribbleProcessor('./models/control_sd15_scribble.pth'),
+        'processor': ScribbleProcessor('./models/controlnet/control_sd15_scribble.pth'),
         'title': 'Control Stable Diffusion with Scribble',
         'params': {}
     },
     'segmentation': {
-        'processor': SegmentationProcessor('./models/control_sd15_seg.pth'),
+        'processor': SegmentationProcessor('./models/controlnet/control_sd15_seg.pth'),
         'title': 'Control Stable Diffusion with Segmentation',
         'params': DETECTOR_PARAMS['segmentation']
     }
@@ -56,7 +56,7 @@ PROCESSORS = {
 
 def create_unified_interface():
     """创建统一的界面"""
-    
+
     with gr.Blocks(title="ControlNet Unified Interface") as demo:
         gr.Markdown("# ControlNet Unified Interface")
         gr.Markdown("Select a ControlNet type and upload an image to generate controlled images.")
@@ -248,4 +248,4 @@ def create_unified_interface():
 # 创建并启动界面
 if __name__ == "__main__":
     demo = create_unified_interface()
-    demo.launch(server_name='0.0.0.0', share=True) 
+    demo.launch(server_name='0.0.0.0', share=True)

@@ -47,7 +47,7 @@ python tutorial_train_sd21.py
 ```yaml
 model:
   config_path: './models/cldm_v15.yaml'
-  resume_path: './models/control_sd15_ini.ckpt'
+  resume_path: './models/controlnet/control_sd15_ini.ckpt'
   sd_model_path: './models/stable-diffusion/v1-5-pruned.ckpt'
   learning_rate: 8e-6
   sd_locked: true

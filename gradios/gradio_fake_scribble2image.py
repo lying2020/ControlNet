@@ -11,7 +11,7 @@ from annotator.util import resize_image, HWC3
 from annotator.hed import HEDdetector, nms
 
 # 创建处理器
-processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/control_sd15_scribble.pth')
+processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_scribble.pth')
 apply_hed = HEDdetector()
 
 def process(input_image, prompt, a_prompt, n_prompt, num_samples, image_resolution, 

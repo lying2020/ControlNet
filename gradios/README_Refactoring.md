@@ -117,7 +117,7 @@ from annotator.util import resize_image, HWC3
 from annotator.new_detector import NewDetector
 
 # 创建处理器
-processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/control_sd15_new.pth')
+processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_new.pth')
 apply_new_detector = NewDetector()
 
 def process(input_image, prompt, a_prompt, n_prompt, num_samples, image_resolution, 

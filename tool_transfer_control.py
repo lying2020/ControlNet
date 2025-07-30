@@ -1,5 +1,5 @@
-path_sd15 = './models/v1-5-pruned.ckpt'
-path_sd15_with_control = './models/control_sd15_openpose.pth'
+path_sd15 = './models/stable-diffusion/v1-5-pruned.ckpt'
+path_sd15_with_control = './models/controlnet/control_sd15_openpose.pth'
 path_input = './models/anything-v3-full.safetensors'
 path_output = './models/control_any3_openpose.pth'
 

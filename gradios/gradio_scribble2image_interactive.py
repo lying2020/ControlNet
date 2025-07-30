@@ -10,7 +10,7 @@ from common_utils import ControlNetProcessor, create_common_ui
 from annotator.util import resize_image, HWC3
 
 # 创建处理器
-processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/control_sd15_scribble.pth')
+processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_scribble.pth')
 
 def process(input_image, prompt, a_prompt, n_prompt, num_samples, image_resolution, 
            ddim_steps, guess_mode, strength, scale, seed, eta):

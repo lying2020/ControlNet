@@ -11,7 +11,7 @@ from annotator.util import resize_image, HWC3
 from annotator.openpose import OpenposeDetector
 
 # 创建处理器
-processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/control_sd15_openpose.pth')
+processor = ControlNetProcessor('./models/controlnet/control_v11p_sd15_openpose.yaml', './models/controlnet/control_v11p_sd15_openpose.pth')
 apply_openpose = OpenposeDetector()
 
 def process(input_image, prompt, a_prompt, n_prompt, num_samples, image_resolution, 
@@ -59,4 +59,5 @@ with block:
 
 # 启动服务
 if __name__ == "__main__":
-    block.launch(server_name='0.0.0.0')
+    print("正在启动 Gradio 界面...")
+    block.launch(server_name='127.0.0.1', share=True, server_port=7860)

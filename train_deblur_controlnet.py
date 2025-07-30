@@ -67,7 +67,7 @@ def main():
     parser = argparse.ArgumentParser(description='Train Deblur ControlNet')
     parser.add_argument('--config', type=str, default='./models/cldm_v15.yaml',
                        help='Path to model config file')
-    parser.add_argument('--resume', type=str, default='./models/control_sd15_ini.ckpt',
+    parser.add_argument('--resume', type=str, default='./models/controlnet/control_sd15_init.ckpt',
                        help='Path to resume checkpoint')
     parser.add_argument('--data_root', type=str, required=True,
                        help='Path to dataset root directory')

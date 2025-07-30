@@ -65,7 +65,7 @@ dataset:
 ```yaml
 model:
   config_path: './models/cldm_v15.yaml'  # ControlNet配置文件
-  resume_path: './models/control_sd15_ini.ckpt'  # 输出路径
+  resume_path: './models/controlnet/control_sd15_ini.ckpt'  # 输出路径
   sd_model_path: './models/stable-diffusion/v1-5-pruned.ckpt'  # SD模型路径
   learning_rate: 8e-6                    # 学习率
   sd_locked: true                        # 是否锁定SD参数

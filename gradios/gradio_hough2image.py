@@ -12,7 +12,7 @@ from annotator.util import resize_image, HWC3
 from annotator.mlsd import MLSDdetector
 
 # 创建处理器
-processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/control_sd15_mlsd.pth')
+processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_mlsd.pth')
 apply_mlsd = MLSDdetector()
 
 def process(input_image, prompt, a_prompt, n_prompt, num_samples, image_resolution, 
