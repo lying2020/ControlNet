@@ -8,18 +8,16 @@ model:
   only_mid_control: false
 
 # 数据集配置引用
-dataset: './configs/dataset_config.yaml'
+dataset: './configs/datasets/dataset_config_raining.yaml'
 
 training:
-  max_epochs: 10
-  precision: 16  # SD 2.1推荐使用混合精度
+  log_dir: './lightning_logs'
+  image_log_dir: './image_log'
   gpus: 1
+  precision: 16  # SD 2.1推荐使用混合精度
+  max_epochs: 10
   logger_freq: 300
   log_every_n_steps: 10
   val_check_interval: 1000
   accumulate_grad_batches: 1
   gradient_clip_val: 1.0
-
-output:
-  log_dir: './lightning_logs'
-  image_log_dir: './image_log'

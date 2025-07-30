@@ -5,7 +5,7 @@
 
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from configs.config_loader import load_training_config
 
@@ -14,9 +14,9 @@ def test_log_dirs():
     """测试日志目录创建"""
     
     print("测试日志目录创建功能...")
-    
+
     # 加载配置
-    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/dataset_config_raining.yaml")
+    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/datasets/dataset_config_raining.yaml")
     dataset_config = config['dataset']
     training_config = config['training']
     

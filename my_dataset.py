@@ -64,7 +64,7 @@ class MyDataset(Dataset):
         # 调整图像尺寸到指定大小
         source = cv2.resize(source, (self.image_size, self.image_size))
         target = cv2.resize(target, (self.image_size, self.image_size))
-        
+
         # 确保图像尺寸正确
         assert source.shape == (self.image_size, self.image_size, 3), f"Source图像尺寸错误: {source.shape}, 期望: ({self.image_size}, {self.image_size}, 3)"
         assert target.shape == (self.image_size, self.image_size, 3), f"Target图像尺寸错误: {target.shape}, 期望: ({self.image_size}, {self.image_size}, 3)"
@@ -72,7 +72,7 @@ class MyDataset(Dataset):
         # 根据配置进行归一化
         source_min, source_max = self.source_norm
         target_min, target_max = self.target_norm
-        
+
         # Normalize source images
         if source_max == 1.0:
             source = source.astype(np.float32) / 255.0

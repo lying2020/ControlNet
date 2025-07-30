@@ -9,10 +9,10 @@ import torch
 import argparse
 import numpy as np
 from torch.utils.data import DataLoader
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from my_dataset import MyDataset
 from configs.config_loader import load_training_config
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
 
@@ -21,17 +21,17 @@ def main():
     parser.add_argument('--sd_version', type=str, default='sd15', choices=['sd15', 'sd21'],
                        help='Stable Diffusion版本 (sd15 或 sd21)')
     parser.add_argument('--batch_size', type=int, default=4, help='批次大小')
-    
+
     args = parser.parse_args()
-    
+
     # 加载配置
-    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/dataset_config_raining.yaml")
+    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/datasets/dataset_config_raining.yaml")
     dataset_config = config['dataset']
 
     print("=" * 60)
     print(f"ControlNet Dataloader 详细结构分析 - {args.sd_version.upper()}")
     print("=" * 60)
-    
+
     print(f"数据集配置:")
     print(f"  数据根目录: {dataset_config['data_root']}")
     print(f"  JSON文件: {dataset_config['json_file']}")
@@ -153,7 +153,7 @@ def test_dataset():
     print("开始测试数据集加载...")
     
     # 加载配置
-    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/dataset_config_raining.yaml")
+    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/datasets/dataset_config_raining.yaml")
     dataset_config = config['dataset']
     
     print(f"数据集配置: {dataset_config}")

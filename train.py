@@ -170,7 +170,7 @@ def create_log_dirs(sd_version, dataset_name, training_config, dataset_config):
     print(f"日志目录: {log_dir}")
     print(f"图像日志目录: {image_log_dir}")
     print(f"实验信息已保存到: {info_file}")
-    
+
     return training_config
 
 
@@ -232,9 +232,9 @@ def main():
     print(f"主配置文件: {main_config_path}")
     if dataset_config_path:
         print(f"数据集配置文件: {dataset_config_path}")
-    
+
     config = load_training_config(main_config_path, dataset_config_path)
-    
+
     # 如果只是显示配置，不进行训练
     if args.show_config:
         print_config(config, f"训练配置 (SD{args.sd_version.upper()}, 数据集: {args.dataset})")

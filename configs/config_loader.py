@@ -152,9 +152,9 @@ def get_dataset_config_path(config_name: str, configs_dir: str = "./configs") ->
         完整的配置文件路径
     """
     if config_name == "default":
-        return os.path.join(configs_dir, "dataset_config.yaml")
+        return os.path.join(configs_dir, "datasets", "dataset_config.yaml")
     else:
-        return os.path.join(configs_dir, f"dataset_config_{config_name}.yaml")
+        return os.path.join(configs_dir, "datasets", f"dataset_config_{config_name}.yaml")
 
 
 def validate_dataset_config(config_path: str) -> bool:
