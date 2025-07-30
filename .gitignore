@@ -5,6 +5,7 @@ lightning_logs/
 image_log/
 dataset/
 datasets/
+tests/quick_test_results/
 
 *.pth
 *.pt
