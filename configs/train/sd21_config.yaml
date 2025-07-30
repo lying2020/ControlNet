@@ -7,16 +7,8 @@ model:
   sd_locked: true
   only_mid_control: false
 
-dataset:
-  data_root: './dataset/fill50k'
-  json_file: 'prompt.json'
-  image_size: 512
-  batch_size: 8
-  num_workers: 4
-  shuffle: true
-  pin_memory: true
-  source_normalization: [0, 1]  # [min, max] for source images
-  target_normalization: [-1, 1]  # [min, max] for target images
+# 数据集配置引用
+dataset: './configs/dataset_config.yaml'
 
 training:
   max_epochs: 10
@@ -30,4 +22,4 @@ training:
 
 output:
   log_dir: './lightning_logs'
-  image_log_dir: './image_log' 
+  image_log_dir: './image_log'

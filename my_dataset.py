@@ -20,6 +20,9 @@ class MyDataset(Dataset):
         self.data_root = self.config.get('data_root', './training/fill50k')
         self.json_file = self.config.get('json_file', 'prompt.json')
 
+        # 从配置中获取图像处理参数
+        self.image_size = self.config.get('image_size', 512)
+
         # 从配置中获取归一化参数
         self.source_norm = self.config.get('source_normalization', [0, 1])
         self.target_norm = self.config.get('target_normalization', [-1, 1])
@@ -45,12 +48,26 @@ class MyDataset(Dataset):
         source_path = os.path.join(self.data_root, source_filename)
         target_path = os.path.join(self.data_root, target_filename)
 
+        # 读取图像并检查是否成功
         source = cv2.imread(source_path)
         target = cv2.imread(target_path)
+        
+        if source is None:
+            raise ValueError(f"无法读取source图像: {source_path}")
+        if target is None:
+            raise ValueError(f"无法读取target图像: {target_path}")
 
         # Do not forget that OpenCV read images in BGR order.
         source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
         target = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
+
+        # 调整图像尺寸到指定大小
+        source = cv2.resize(source, (self.image_size, self.image_size))
+        target = cv2.resize(target, (self.image_size, self.image_size))
+        
+        # 确保图像尺寸正确
+        assert source.shape == (self.image_size, self.image_size, 3), f"Source图像尺寸错误: {source.shape}, 期望: ({self.image_size}, {self.image_size}, 3)"
+        assert target.shape == (self.image_size, self.image_size, 3), f"Target图像尺寸错误: {target.shape}, 期望: ({self.image_size}, {self.image_size}, 3)"
 
         # 根据配置进行归一化
         source_min, source_max = self.source_norm

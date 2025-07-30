@@ -1,9 +1,20 @@
-from my_dataset import MyDataset
-from torch.utils.data import DataLoader
-from configs.config_loader import load_sd_config
+#!/usr/bin/env python3
+"""
+测试数据集加载是否正常
+"""
+
+import sys
+import os
 import torch
-import numpy as np
 import argparse
+import numpy as np
+from torch.utils.data import DataLoader
+from my_dataset import MyDataset
+from configs.config_loader import load_training_config
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+
 
 def main():
     parser = argparse.ArgumentParser(description='测试数据集加载和结构')
@@ -14,9 +25,9 @@ def main():
     args = parser.parse_args()
     
     # 加载配置
-    config = load_sd_config(args.sd_version)
+    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/dataset_config_raining.yaml")
     dataset_config = config['dataset']
-    
+
     print("=" * 60)
     print(f"ControlNet Dataloader 详细结构分析 - {args.sd_version.upper()}")
     print("=" * 60)
@@ -135,5 +146,48 @@ ControlNet 数据说明:
 
     print("=" * 60)
 
+
+def test_dataset():
+    """测试数据集加载"""
+    
+    print("开始测试数据集加载...")
+    
+    # 加载配置
+    config = load_training_config("./configs/train/sd15_config.yaml", "./configs/dataset_config_raining.yaml")
+    dataset_config = config['dataset']
+    
+    print(f"数据集配置: {dataset_config}")
+    
+    try:
+        # 创建数据集
+        dataset = MyDataset(config=dataset_config)
+        print(f"数据集创建成功，包含 {len(dataset)} 个样本")
+        
+        # 测试加载第一个样本
+        print("\n测试加载第一个样本...")
+        sample = dataset[0]
+        
+        print(f"样本键: {list(sample.keys())}")
+        print(f"jpg shape: {sample['jpg'].shape}")
+        print(f"hint shape: {sample['hint'].shape}")
+        print(f"txt: {sample['txt']}")
+        
+        # 测试加载多个样本
+        print("\n测试加载多个样本...")
+        for i in range(min(3, len(dataset))):
+            sample = dataset[i]
+            print(f"样本 {i}: jpg={sample['jpg'].shape}, hint={sample['hint'].shape}")
+        
+        print("\n✓ 数据集测试通过！")
+        return True
+        
+    except Exception as e:
+        print(f"\n✗ 数据集测试失败: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 if __name__ == "__main__":
+    test_dataset()
     main()
