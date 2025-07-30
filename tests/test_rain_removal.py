@@ -90,12 +90,21 @@ class RainRemovalTester:
 
         # 生成图像
         with torch.no_grad():
-            uc = self.model.get_learned_conditioning(negative_prompts)
-            c = self.model.get_learned_conditioning(prompts)
+            # 正确构造ControlNet期望的条件格式
+            cond = {
+                "c_concat": [None],  # 没有图像控制信号
+                "c_crossattn": [self.model.get_learned_conditioning(prompts)]
+            }
+            un_cond = {
+                "c_concat": [None],  # 没有图像控制信号
+                "c_crossattn": [self.model.get_learned_conditioning(negative_prompts)]
+            }
             
             shape = [4, 64, 64]  # 默认尺寸
             samples, _ = self.ddim_sampler.sample(
-                ddim_steps, num_samples, shape, c, uc, eta=0, verbose=False
+                ddim_steps, num_samples, shape, cond, eta=0, verbose=False,
+                unconditional_guidance_scale=scale,
+                unconditional_conditioning=un_cond
             )
 
             x_samples = self.model.decode_first_stage(samples)
@@ -151,16 +160,24 @@ class RainRemovalTester:
 
         # 生成图像
         with torch.no_grad():
-            uc = self.model.get_learned_conditioning(negative_prompts)
-            c = self.model.get_learned_conditioning(prompts)
-            
             # 使用图像作为控制信号
             control = torch.cat([image] * num_samples, dim=0)
             
+            # 正确构造ControlNet期望的条件格式
+            cond = {
+                "c_concat": [control],
+                "c_crossattn": [self.model.get_learned_conditioning(prompts)]
+            }
+            un_cond = {
+                "c_concat": [control],
+                "c_crossattn": [self.model.get_learned_conditioning(negative_prompts)]
+            }
+            
             shape = [4, 64, 64]
             samples, _ = self.ddim_sampler.sample(
-                ddim_steps, num_samples, shape, c, uc, eta=0, verbose=False, x_T=None,
-                control=control
+                ddim_steps, num_samples, shape, cond, eta=0, verbose=False,
+                unconditional_guidance_scale=scale,
+                unconditional_conditioning=un_cond
             )
             
             x_samples = self.model.decode_first_stage(samples)
@@ -212,16 +229,24 @@ class RainRemovalTester:
         
         # 生成图像
         with torch.no_grad():
-            uc = self.model.get_learned_conditioning(negative_prompts)
-            c = self.model.get_learned_conditioning(prompts)
-            
             # 使用图像作为控制信号
             control = torch.cat([image] * num_samples, dim=0)
             
+            # 正确构造ControlNet期望的条件格式
+            cond = {
+                "c_concat": [control],
+                "c_crossattn": [self.model.get_learned_conditioning(prompts)]
+            }
+            un_cond = {
+                "c_concat": [control],
+                "c_crossattn": [self.model.get_learned_conditioning(negative_prompts)]
+            }
+            
             shape = [4, 64, 64]
             samples, _ = self.ddim_sampler.sample(
-                ddim_steps, num_samples, shape, c, uc, eta=0, verbose=False, x_T=None,
-                control=control
+                ddim_steps, num_samples, shape, cond, eta=0, verbose=False,
+                unconditional_guidance_scale=scale,
+                unconditional_conditioning=un_cond
             )
             
             x_samples = self.model.decode_first_stage(samples)

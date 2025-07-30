@@ -86,7 +86,7 @@ def load_model(sd_version='sd15', use_controlnet=True):
                     "conditioning_key": "crossattn",
                     "monitor": "val/loss_simple_ema",
                     "scale_factor": 0.18215,
-                    "use_ema": True,  # 启用EMA以匹配预训练模型
+                    "use_ema": False,
                     
                     "first_stage_config": {
                         "target": "ldm.models.autoencoder.AutoencoderKL",
@@ -139,16 +139,16 @@ def load_model(sd_version='sd15', use_controlnet=True):
 
         # 创建模型
         model = instantiate_from_config(config.model).to(device)
-
-        # 加载状态字典，忽略不匹配的键
+        
+        # 加载权重，使用strict=False忽略不匹配的键
         state_dict = load_state_dict(model_path, location=device)
         missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=False)
-
+        
         if missing_keys:
-            print(f"Missing keys: {missing_keys}")
+            print(f"警告: 缺失的键: {missing_keys[:10]}...")  # 只显示前10个
         if unexpected_keys:
-            print(f"Unexpected keys: {len(unexpected_keys)} keys ignored")
-
+            print(f"警告: 意外的键: {unexpected_keys[:10]}...")  # 只显示前10个
+            
         model.eval()
 
     return model, device
@@ -370,7 +370,7 @@ def main():
     # 加载模型
     model, device = load_model(args.sd_version, args.use_controlnet)
 
-    model_type = "ControlNet" if args.use_controlnet else "原始SD"
+    model_type = "ControlNet" if args.use_controlnet else "Pure_SD"
     print(f"\n{'='*50}")
     print(f"开始 {args.sd_version.upper()} {model_type} 快速测试")
     print(f"{'='*50}")
@@ -406,6 +406,15 @@ def main():
             "Remove rain from the image, clear weather, high quality",
             output_path, args.use_controlnet
         )
+
+        # 加载和预处理图像
+        image = cv2.imread(image_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (512, 512))
+
+        # 保存图像
+        original_image_path = os.path.join(args.output_dir, f"{args.sd_version}_{model_type}_original_{i+1}.png")
+        Image.fromarray(image.astype(np.uint8)).save(original_image_path)
 
         # 重建模式测试
         output_path = os.path.join(args.output_dir, f"{args.sd_version}_{model_type}_reconstruction_{i+1}.png")
