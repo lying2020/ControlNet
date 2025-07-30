@@ -129,17 +129,19 @@ def create_log_dirs(sd_version, dataset_name, training_config, dataset_config):
     # 构建实验名称，包含更多信息
     experiment_name = f"{sd_version}_{dataset_name}_bs{batch_size}_size{image_size}_lr{learning_rate}_{timestamp}"
 
-    # 更新日志路径
+    # 更新日志路径 - 使用统一的实验目录
     base_log_dir = training_config.get('log_dir', './lightning_logs')
-    base_image_log_dir = training_config.get('image_log_dir', './image_log')
+    experiment_dir = os.path.join(base_log_dir, experiment_name)
 
-    # 创建带实验信息的路径
-    log_dir = os.path.join(base_log_dir, experiment_name)
-    image_log_dir = os.path.join(base_image_log_dir, experiment_name)
+    # 在实验目录下创建子目录
+    log_dir = os.path.join(experiment_dir, 'logs')  # PyTorch Lightning日志
+    image_log_dir = os.path.join(experiment_dir, 'image_log')  # 图像日志
+    checkpoints_dir = os.path.join(experiment_dir, 'checkpoints')  # 模型检查点
 
     # 确保目录存在
     os.makedirs(log_dir, exist_ok=True)
     os.makedirs(image_log_dir, exist_ok=True)
+    os.makedirs(checkpoints_dir, exist_ok=True)
 
     # 创建实验信息文件
     experiment_info = {
@@ -152,23 +154,33 @@ def create_log_dirs(sd_version, dataset_name, training_config, dataset_config):
         'learning_rate': learning_rate,
         'max_epochs': training_config.get('max_epochs', 10),
         'gpus': training_config.get('gpus', 1),
-        'precision': training_config.get('precision', 32)
+        'precision': training_config.get('precision', 32),
+        'directories': {
+            'experiment_dir': experiment_dir,
+            'logs_dir': log_dir,
+            'image_log_dir': image_log_dir,
+            'checkpoints_dir': checkpoints_dir
+        }
     }
 
     # 保存实验信息到JSON文件
     import json
-    info_file = os.path.join(log_dir, 'experiment_info.json')
+    info_file = os.path.join(experiment_dir, 'experiment_info.json')
     with open(info_file, 'w', encoding='utf-8') as f:
         json.dump(experiment_info, f, indent=2, ensure_ascii=False)
 
     # 更新配置
     training_config['log_dir'] = log_dir
     training_config['image_log_dir'] = image_log_dir
+    training_config['experiment_dir'] = experiment_dir
     training_config['experiment_name'] = experiment_name
 
     print(f"实验名称: {experiment_name}")
-    print(f"日志目录: {log_dir}")
-    print(f"图像日志目录: {image_log_dir}")
+    print(f"实验目录: {experiment_dir}")
+    print(f"  ├── logs/ (PyTorch Lightning日志)")
+    print(f"  ├── image_log/ (图像日志)")
+    print(f"  ├── checkpoints/ (模型检查点)")
+    print(f"  └── experiment_info.json (实验信息)")
     print(f"实验信息已保存到: {info_file}")
 
     return training_config
@@ -188,7 +200,8 @@ def train(model, dataloader, training_config):
         precision=training_config['precision'], 
         callbacks=[logger],
         max_epochs=training_config['max_epochs'],
-        default_root_dir=training_config['log_dir']  # 设置默认根目录
+        default_root_dir=training_config['log_dir'],  # 设置默认根目录
+        version=None  # 禁用版本号，避免创建version_0目录
     )
 
     # Train!

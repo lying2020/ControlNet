@@ -21,7 +21,6 @@ from annotator.util import resize_image, HWC3
 from cldm.model import create_model, load_state_dict
 from cldm.ddim_hacked import DDIMSampler
 from share import *
-import configs.config as config
 
 # 添加父目录到Python路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -90,7 +89,7 @@ class ControlNetProcessor:
             seed_everything(seed)
 
             # 内存优化
-            if config.save_memory:
+            if save_memory:
                 self.model.low_vram_shift(is_diffusing=False)
 
             # 准备条件
@@ -98,7 +97,7 @@ class ControlNetProcessor:
             un_cond = {"c_concat": None if guess_mode else [control], "c_crossattn": [self.model.get_learned_conditioning([n_prompt] * num_samples)]}
             shape = (4, H // 8, W // 8)
 
-            if config.save_memory:
+            if save_memory:
                 self.model.low_vram_shift(is_diffusing=True)
 
             # 设置控制比例
@@ -111,7 +110,7 @@ class ControlNetProcessor:
                                                              unconditional_guidance_scale=scale,
                                                              unconditional_conditioning=un_cond)
 
-            if config.save_memory:
+            if save_memory:
                 self.model.low_vram_shift(is_diffusing=False)
 
             # 解码结果
