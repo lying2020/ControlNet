@@ -18,8 +18,8 @@ from datetime import datetime
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from share import *
-from cldm.model import create_model, load_state_dict
-from cldm.ddim_hacked import DDIMSampler
+from cores.cldm.model import create_model, load_state_dict
+from cores.cldm.ddim_hacked import DDIMSampler
 
 
 class RainRemovalTester:

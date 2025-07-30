@@ -17,9 +17,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 from pytorch_lightning import seed_everything
-from annotator.util import resize_image, HWC3
-from cldm.model import create_model, load_state_dict
-from cldm.ddim_hacked import DDIMSampler
+from cores.annotator.util import resize_image, HWC3
+from cores.cldm.model import create_model, load_state_dict
+from cores.cldm.ddim_hacked import DDIMSampler
 from share import *
 
 # 添加父目录到Python路径
