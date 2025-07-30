@@ -7,8 +7,8 @@ import cv2
 import torch
 import gradio as gr
 from common_utils import ControlNetProcessor, create_common_ui
-from cores.annotator.util import resize_image, HWC3
-from cores.annotator.openpose import OpenposeDetector
+from annotator.util import resize_image, HWC3
+from annotator.openpose import OpenposeDetector
 
 # 创建处理器
 processor = ControlNetProcessor('./models/controlnet/control_v11p_sd15_openpose.yaml', './models/controlnet/control_v11p_sd15_openpose.pth')

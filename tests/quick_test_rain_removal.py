@@ -17,8 +17,8 @@ from pathlib import Path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from share import *
-from cores.cldm.model import create_model, load_state_dict
-from cores.cldm.ddim_hacked import DDIMSampler
+from cldm.model import create_model, load_state_dict
+from cldm.ddim_hacked import DDIMSampler
 
 
 def load_model(sd_version='sd15'):

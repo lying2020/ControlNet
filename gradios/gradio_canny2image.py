@@ -7,8 +7,8 @@ import cv2
 import torch
 import gradio as gr
 from common_utils import ControlNetProcessor, create_common_ui
-from cores.annotator.util import resize_image, HWC3
-from cores.annotator.canny import CannyDetector
+from annotator.util import resize_image, HWC3
+from annotator.canny import CannyDetector
 
 # 创建处理器
 processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_canny.pth')

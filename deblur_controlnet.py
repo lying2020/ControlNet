@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from cores.cldm.cldm import ControlLDM
-from cores.ldm.util import instantiate_from_config
+from cldm.cldm import ControlLDM
+from ldm.util import instantiate_from_config
 import pytorch_lightning as pl
 
 

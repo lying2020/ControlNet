@@ -8,8 +8,8 @@ import numpy as np
 import torch
 import gradio as gr
 from common_utils import ControlNetProcessor, create_common_ui
-from cores.annotator.util import resize_image, HWC3
-from cores.annotator.mlsd import MLSDdetector
+from annotator.util import resize_image, HWC3
+from annotator.mlsd import MLSDdetector
 
 # 创建处理器
 processor = ControlNetProcessor('./models/cldm_v15.yaml', './models/controlnet/control_sd15_mlsd.pth')

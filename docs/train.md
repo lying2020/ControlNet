@@ -151,8 +151,8 @@ The training code in "tutorial_train.py" is actually surprisingly simple:
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from tutorial_dataset import MyDataset
-from cores.cldm.logger import ImageLogger
-from cores.cldm.model import create_model, load_state_dict
+from cldm.logger import ImageLogger
+from cldm.model import create_model, load_state_dict
 
 
 # Configs

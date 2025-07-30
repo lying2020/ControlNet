@@ -6,8 +6,8 @@ import torch
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from my_dataset import MyDataset
-from cores.cldm.logger import ImageLogger
-from cores.cldm.model import create_model, load_state_dict
+from cldm.logger import ImageLogger
+from cldm.model import create_model, load_state_dict
 from configs.config_loader import load_training_config, get_dataset_config_path, print_config, list_available_dataset_configs
 from datetime import datetime
 
